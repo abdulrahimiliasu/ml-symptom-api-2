@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, render_template
 import numpy as np
 from scipy.stats import mode
 import training
@@ -33,7 +33,7 @@ def predictDisease(symptoms):
         "svm_model_prediction": nb_prediction,
         "final_prediction": final_prediction
     }
-    return predictions
+    return final_prediction
 
 app = Flask(__name__)
 
@@ -51,7 +51,7 @@ def hello_world(syms):
         a = a.replace('_', ' ')
         s += f'{a},'
     predictions = predictDisease(s[:-1])
-    return predictions
+    return render_template("home.html", prediction=predictions)
 
 
 if __name__ == '__main__':
